@@ -1,9 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { Link } from 'react-router-dom';
 
 const mediaUrl = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
-const CatRow = ({file}) => {
+const MediaRow = ({file}) => {
   return (
     <tr>
       <td>
@@ -14,14 +15,14 @@ const CatRow = ({file}) => {
         <p>{file.description}</p>
       </td>
       <td>
-          <a href={mediaUrl + file.filename}>View</a>
+          <Link to={'/single/' + file.file_id}>View</Link>
       </td>
     </tr>
   );
 };
 
-CatRow.propTypes = {
+MediaRow.propTypes = {
     pic: PropTypes.object,
 };
 
-export default CatRow;
+export default MediaRow;
