@@ -1,12 +1,16 @@
-import React from "react";
-import PropTypes from "prop-types";
+import React, { useContext, useEffect } from "react";
+import { Redirect } from "react-router-dom";
+import { MediaContext } from "../contexts/MediaContext";
 
 const Logout = () => {
-  return (
-    <>
-      <h1>Logout</h1>
-    </>
-  );
+  const [user, setUser] = useContext(MediaContext);
+
+  useEffect(() => {
+    setUser(null);
+    localStorage.clear();
+  }, [setUser]);
+
+  return <Redirect to={"/home"} />;
 };
 
 export default Logout;

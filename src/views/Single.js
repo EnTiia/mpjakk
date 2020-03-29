@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {useSingleMedia} from '../hooks/ApiHooks';
+import { useSingleMedia } from "../hooks/ApiHooks";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 

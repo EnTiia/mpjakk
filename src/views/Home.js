@@ -1,12 +1,12 @@
-import React from 'react';
-import MediaTable from '../components/MediaTable';
+import React from "react";
+import MediaTable from "../components/MediaTable";
 
-const Home = (props) => {
+const Home = () => {
   return (
-      <>
-        <h1>Home</h1>
-        <MediaTable />
-      </>
+    <>
+      <h1>Home</h1>
+      <MediaTable />
+    </>
   );
 };
 
