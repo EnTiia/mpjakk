@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { MediaContext } from "../contexts/MediaContext";
 import {
   Card,
@@ -7,7 +7,7 @@ import {
   makeStyles,
   Typography
 } from "@material-ui/core/";
-import { useAvatarImage } from "../hooks/ApiHooks";
+import {getAvatarImage} from '../hooks/ApiHooks';
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
@@ -23,8 +23,15 @@ const useStyles = makeStyles((theme) => ({
 const Profile = () => {
   const classes = useStyles();
   const [user] = useContext(MediaContext);
-  console.log(user);
-  const avatar = useAvatarImage(445);
+  const [avatar, setAvatar] = useState([]);
+  useEffect(() => {
+    (async () => {
+      if (user !== null) {
+        setAvatar(await getAvatarImage(user.user_id));
+      }
+    })();
+  }, [user]);
+
   return (
     <>
       {user !== null && avatar.length > 0 && (
