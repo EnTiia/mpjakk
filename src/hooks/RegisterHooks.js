@@ -11,6 +11,7 @@ const useSignUpForm = callback => {
     if (event) {
       event.preventDefault();
     }
+    delete inputs.confirm;
     callback();
   };
   const handleInputChange = event => {
