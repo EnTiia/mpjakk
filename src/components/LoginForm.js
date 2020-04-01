@@ -4,6 +4,7 @@ import useLoginForm from "../hooks/LoginHooks";
 import { login } from "../hooks/ApiHooks";
 import { withRouter } from "react-router-dom";
 import { MediaContext } from "../contexts/MediaContext";
+import { Button, TextField, Grid, Typography } from "@material-ui/core";
 
 const LoginForm = ({ history }) => {
   const [user, setUser] = useContext(MediaContext);
@@ -19,28 +20,46 @@ const LoginForm = ({ history }) => {
       console.log(e.message);
     }
   };
+  
   const { inputs, handleInputChange, handleSubmit } = useLoginForm(doLogin);
   return (
-    <>
-      <h1>Login</h1>
+    <Grid 
+      container 
+      direction="column"
+    >
+      <Grid item xs>
+        <Typography gutterBottom variant="h5" component="h2">
+          Login
+        </Typography>
+      </Grid>
       <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Username"
-          onChange={handleInputChange}
-          value={inputs.username}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          onChange={handleInputChange}
-          value={inputs.password}
-        />
-        <button type="submit">Login</button>
+        <Grid item xs>
+          <TextField
+            fullWidth
+            type="text"
+            name="username"
+            label="Username"
+            onChange={handleInputChange}
+            value={inputs.username}
+          />
+        </Grid>
+        <Grid item xs>
+          <TextField
+            fullWidth
+            type="password"
+            name="password"
+            label="Password"
+            onChange={handleInputChange}
+            value={inputs.password}
+          />
+        </Grid>
+        <Grid item xs>
+          <Button variant="contained" color="primary" type="submit">
+            Login
+          </Button>
+        </Grid>
       </form>
-    </>
+    </Grid>
   );
 };
 

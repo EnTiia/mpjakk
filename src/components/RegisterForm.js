@@ -4,6 +4,7 @@ import useSignUpForm from "../hooks/RegisterHooks";
 import { checkUserAvailable, login, register } from "../hooks/ApiHooks";
 import { withRouter } from "react-router-dom";
 import { MediaContext } from "../contexts/MediaContext";
+import { Button, TextField, Grid, Typography } from "@material-ui/core";
 
 const RegisterForm = ({ history }) => {
   const [user, setUser] = useContext(MediaContext);
@@ -25,40 +26,62 @@ const RegisterForm = ({ history }) => {
 
   const { inputs, handleInputChange, handleSubmit } = useSignUpForm(doRegister);
   return (
-    <>
-      <h1>Register</h1>
+    <Grid 
+    container
+    direction="column">
+      <Grid item xs>
+        <Typography gutterBottom variant="h5" component="h2">
+        Register
+        </Typography>
+      </Grid>
       <form onSubmit={handleSubmit}>
-        <input
+      <Grid item xs>
+        <TextField
+        fullWidth
           type="text"
           name="username"
-          placeholder="Username"
+          label="Username"
           onChange={handleInputChange}
           value={inputs.username}
         />
-        <input
+      </Grid>
+      <Grid item xs>
+        <TextField
+        fullWidth
           type="password"
           name="password"
-          placeholder="Password"
+          label="Password"
           onChange={handleInputChange}
           value={inputs.password}
         />
-        <input
+        </Grid>
+        <Grid item xs>
+        <TextField
+        fullWidth
           type="email"
           name="email"
-          placeholder="Email"
+          label="Email"
           onChange={handleInputChange}
           value={inputs.email}
         />
-        <input
+        </Grid>
+        <Grid item xs>
+        <TextField
+        fullWidth
           type="text"
           name="full_name"
-          placeholder="Full name"
+          label="Full name"
           onChange={handleInputChange}
           value={inputs.full_name}
         />
-        <button type="submit">Register</button>
+        </Grid>
+        <Grid item xs>
+        <Button variant="contained" color="primary" type="submit">
+          Register
+        </Button>
+        </Grid>
       </form>
-    </>
+    </Grid>
   );
 };
 

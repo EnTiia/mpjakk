@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSingleMedia } from "../hooks/ApiHooks";
+import { Typography } from "@material-ui/core";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
@@ -10,7 +11,9 @@ const Single = ({ match }) => {
 
   return (
     <React.Fragment>
-      <h1>{file.title}</h1>
+      <Typography gutterBottom variant="h5" component="h2">
+        {file.title}
+      </Typography>
       <img src={mediaUrl + file.filename} alt={file.title} />
     </React.Fragment>
   );
