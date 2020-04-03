@@ -27,7 +27,7 @@ const LoginForm = ({ history }) => {
       container 
       direction="column"
     >
-      <Grid item xs>
+      <Grid item xs="12">
         <Typography gutterBottom variant="h5" component="h2">
           Login
         </Typography>

@@ -7,23 +7,28 @@ import {
   makeStyles,
   Typography
 } from "@material-ui/core/";
-import {getAvatarImage} from '../hooks/ApiHooks';
+import { getAvatarImage } from "../hooks/ApiHooks";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import PersonIcon from "@material-ui/icons/Person";
+import EmailIcon from "@material-ui/icons/Email";
+import ProfileForm from "../components/ProfileForm";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(theme => ({
   root: {
-    maxWidth: 345,
+    maxWidth: 345
   },
   media: {
-    height: 300,
-  },
+    height: 300
+  }
 }));
 
 const Profile = () => {
   const classes = useStyles();
   const [user] = useContext(MediaContext);
   const [avatar, setAvatar] = useState([]);
+
   useEffect(() => {
     (async () => {
       if (user !== null) {
@@ -34,11 +39,16 @@ const Profile = () => {
 
   return (
     <>
+      <Typography gutterBottom variant="h5" component="h2">
+        Profile
+      </Typography>
       {user !== null && avatar.length > 0 && (
         <Card>
           <CardMedia
+            component="img"
             className={classes.media}
             image={mediaUrl + avatar[0].filename}
+            alt="Avatar image"
             title="Avatar image"
           />
           <CardContent>
@@ -57,6 +67,7 @@ const Profile = () => {
           </CardContent>
         </Card>
       )}
+      <ProfileForm />
     </>
   );
 };

@@ -1,10 +1,8 @@
 import { useState } from "react";
 
-const useSignUpForm = callback => {
+const useProfileForm = callback => {
   const [inputs, setInputs] = useState({
     username: "",
-    password: "",
-    confirm: "",
     email: "",
     full_name: ""
   });
@@ -12,6 +10,7 @@ const useSignUpForm = callback => {
     if (event) {
       event.preventDefault();
     }
+    delete inputs.confirm;
     callback();
   };
   const handleInputChange = event => {
@@ -26,8 +25,9 @@ const useSignUpForm = callback => {
   return {
     handleSubmit,
     handleInputChange,
-    inputs
+    inputs,
+    setInputs
   };
 };
 
-export default useSignUpForm;
+export default useProfileForm;

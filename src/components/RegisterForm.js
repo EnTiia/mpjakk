@@ -9,9 +9,10 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 const RegisterForm = ({ history }) => {
   const [user, setUser] = useContext(MediaContext);
+  
   const doRegister = async () => {
     try {
-      await checkUserAvailable(inputs.username);
+      delete inputs.confirm;
       await register(inputs);
       //Kirjaudu automaattisesti
       const userdata = await login(inputs);
@@ -29,7 +30,6 @@ const RegisterForm = ({ history }) => {
 
   useEffect(() => {
     ValidatorForm.addValidationRule("isPasswordMatch", value => {
-      console.log(value);
       if (value !== inputs.password) {
         return false;
       }
@@ -37,10 +37,8 @@ const RegisterForm = ({ history }) => {
     });
 
     ValidatorForm.addValidationRule("isAvailable", async value => {
-      console.log(value);
       try {
         const response = await checkUserAvailable(value);
-        console.log(response);
         return response.available;
       } catch (e) {
         console.log(e.message);
@@ -51,7 +49,7 @@ const RegisterForm = ({ history }) => {
 
   return (
     <Grid container direction="column">
-      <Grid item xs>
+      <Grid item>
         <Typography gutterBottom variant="h5" component="h2">
           Register
         </Typography>
