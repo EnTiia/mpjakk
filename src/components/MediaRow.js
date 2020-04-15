@@ -6,21 +6,32 @@ import PageviewIcon from "@material-ui/icons/Pageview";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   icon: {
-    color: "rgba(255, 255, 255, 0.54)"
-  }
+    color: "rgba(255, 255, 255, 0.54)",
+  },
 }));
 
 const MediaRow = ({ file }) => {
+  const description = JSON.parse(file.description);
   const classes = useStyles();
-
   return (
     <>
-      <img src={mediaUrl + file.thumbnails.w160} alt={file.title} />
+      <img
+        src={mediaUrl + file.thumbnails.w320}
+        alt={file.title}
+        style={{
+          filter: `
+                 brightness(${description.filters.brightness}%)
+                 contrast(${description.filters.contrast}%) 
+                 saturate(${description.filters.saturation}%)
+                 sepia(${description.filters.sepia}%)
+                 `,
+        }}
+      />
       <GridListTileBar
         title={file.title}
-        subtitle={file.description}
+        subtitle={description.desc}
         actionIcon={
           <IconButton
             aria-label={`info about ${file.title}`}
@@ -37,7 +48,7 @@ const MediaRow = ({ file }) => {
 };
 
 MediaRow.propTypes = {
-  file: PropTypes.object
+  file: PropTypes.object,
 };
 
 export default MediaRow;

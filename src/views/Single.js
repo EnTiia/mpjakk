@@ -1,26 +1,61 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { useSingleMedia } from "../hooks/ApiHooks";
-import { Typography } from "@material-ui/core";
+import { Typography, Paper, makeStyles } from "@material-ui/core";
+import BackButton from "../components/BackButton";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
+const useStyles = makeStyles((theme) => ({
+  image: {
+    width: "100%",
+    borderRadius: 4,
+    marginBottom: -3,
+  },
+}));
+
 const Single = ({ match }) => {
+  const classes = useStyles();
   console.log("match", match.params.id);
   const file = useSingleMedia(match.params.id);
+  let description = undefined;
+  if (file !== null) {
+    description = JSON.parse(file.description);
+  }
 
   return (
-    <React.Fragment>
-      <Typography gutterBottom variant="h5" component="h2">
-        {file.title}
-      </Typography>
-      <img src={mediaUrl + file.filename} alt={file.title} />
-    </React.Fragment>
+    <>
+      {file !== null && (
+        <>
+          <BackButton />
+          <Typography gutterBottom variant="h5" component="h2">
+            {file.title}
+          </Typography>
+          <Paper>
+            {description && (
+              <img
+                src={mediaUrl + file.filename}
+                alt={file.title}
+                className={classes.image}
+                style={{
+                  filter: `
+                 brightness(${description.filters.brightness}%)
+                 contrast(${description.filters.contrast}%) 
+                 saturate(${description.filters.saturation}%)
+                 sepia(${description.filters.sepia}%)
+                 `,
+                }}
+              />
+            )}
+          </Paper>
+        </>
+      )}
+    </>
   );
 };
 
 Single.propTypes = {
-  match: PropTypes.object
+  match: PropTypes.object,
 };
 
 export default Single;

@@ -4,31 +4,24 @@ import {
   Card,
   CardMedia,
   CardContent,
-  makeStyles,
-  Typography
-} from "@material-ui/core/";
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@material-ui/core";
 import { getAvatarImage } from "../hooks/ApiHooks";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ProfileForm from "../components/ProfileForm";
+import BackButton from "../components/BackButton";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    maxWidth: 345
-  },
-  media: {
-    height: 300
-  }
-}));
-
 const Profile = () => {
-  const classes = useStyles();
   const [user] = useContext(MediaContext);
   const [avatar, setAvatar] = useState([]);
-
   useEffect(() => {
     (async () => {
       if (user !== null) {
@@ -39,31 +32,39 @@ const Profile = () => {
 
   return (
     <>
-      <Typography gutterBottom variant="h5" component="h2">
+      <BackButton />
+      <Typography component="h1" variant="h2" gutterBottom>
         Profile
       </Typography>
       {user !== null && avatar.length > 0 && (
         <Card>
           <CardMedia
             component="img"
-            className={classes.media}
             image={mediaUrl + avatar[0].filename}
             alt="Avatar image"
             title="Avatar image"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
-              Profile
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {user.username}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {user.email}
-            </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
-              {user.full_name}
-            </Typography>
+            <List>
+              <ListItem>
+                <ListItemIcon>
+                  <AccountBoxIcon />
+                </ListItemIcon>
+                <ListItemText primary={user.username} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <EmailIcon />
+                </ListItemIcon>
+                <ListItemText primary={user.email} />
+              </ListItem>
+              <ListItem>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText primary={user.full_name} />
+              </ListItem>
+            </List>
           </CardContent>
         </Card>
       )}

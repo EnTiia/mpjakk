@@ -9,20 +9,24 @@ import Login from "./views/Login";
 import Logout from "./views/Logout";
 import { MediaProvider } from "./contexts/MediaContext";
 import { Container } from "@material-ui/core";
+import Upload from "./views/Upload";
 
 const App = () => {
   return (
     <Router basename={process.env.PUBLIC_URL}>
       <MediaProvider>
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
           <Nav />
-          <Switch>
-            <Route path="/" exact component={Login} />
-            <Route path="/home" component={Home} />
-            <Route path="/profile" component={Profile} />
-            <Route path="/single/:id" component={Single} />
-            <Route path="/logout" component={Logout} />
-          </Switch>
+          <main>
+            <Switch>
+              <Route path="/" exact component={Login} />
+              <Route path="/home" component={Home} />
+              <Route path="/profile" component={Profile} />
+              <Route path="/single/:id" component={Single} />
+              <Route path="/logout" component={Logout} />
+              <Route path="/upload" component={Upload} />
+            </Switch>
+          </main>
         </Container>
       </MediaProvider>
     </Router>

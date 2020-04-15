@@ -5,11 +5,11 @@ const baseUrl = "http://media.mw.metropolia.fi/wbma/";
 const useAllMedia = () => {
   const [data, setData] = useState([]);
   const fetchUrl = async () => {
-    const response = await fetch(baseUrl + "media");
+    const response = await fetch(baseUrl + "tags/mpjakk");
     const json = await response.json();
     //Haetaan yksittäiset kuvat, jotta saadan thumbnailit
     const items = await Promise.all(
-      json.map(async item => {
+      json.map(async (item) => {
         const response = await fetch(baseUrl + "media/" + item.file_id);
         return await response.json();
       })
@@ -25,9 +25,9 @@ const useAllMedia = () => {
   return data;
 };
 
-const useSingleMedia = id => {
-  const [data, setData] = useState({});
-  const fetchUrl = async fileid => {
+const useSingleMedia = (id) => {
+  const [data, setData] = useState(null);
+  const fetchUrl = async (fileid) => {
     const response = await fetch(baseUrl + "media/" + fileid);
     const item = await response.json();
     setData(item);
@@ -40,19 +40,19 @@ const useSingleMedia = id => {
   return data;
 };
 
-const getAvatarImage = async id => {
+const getAvatarImage = async (id) => {
   console.log("ai", id);
   const response = await fetch(baseUrl + "tags/avatar_" + id);
   return await response.json();
 };
 
-const register = async inputs => {
+const register = async (inputs) => {
   const fetchOptions = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(inputs)
+    body: JSON.stringify(inputs),
   };
   try {
     const response = await fetch(baseUrl + "users", fetchOptions);
@@ -64,13 +64,13 @@ const register = async inputs => {
   }
 };
 
-const login = async inputs => {
+const login = async (inputs) => {
   const fetchOptions = {
     method: "POST",
     headers: {
-      "Content-Type": "application/json"
+      "Content-Type": "application/json",
     },
-    body: JSON.stringify(inputs)
+    body: JSON.stringify(inputs),
   };
   try {
     const response = await fetch(baseUrl + "login", fetchOptions);
@@ -82,7 +82,7 @@ const login = async inputs => {
   }
 };
 
-const checkUserAvailable = async name => {
+const checkUserAvailable = async (name) => {
   try {
     const response = await fetch(baseUrl + "users/username/" + name);
     const json = await response.json();
@@ -93,11 +93,11 @@ const checkUserAvailable = async name => {
   }
 };
 
-const checkToken = async token => {
+const checkToken = async (token) => {
   const fetchOptions = {
     headers: {
-      "x-access-token": token
-    }
+      "x-access-token": token,
+    },
   };
   try {
     const response = await fetch(baseUrl + "users/user", fetchOptions);
@@ -114,15 +114,60 @@ const updateProfile = async (inputs, token) => {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
-      "x-access-token": token
+      "x-access-token": token,
     },
-    body: JSON.stringify(inputs)
+    body: JSON.stringify(inputs),
   };
   try {
     const response = await fetch(baseUrl + "users", fetchOptions);
     const json = await response.json();
     if (!response.ok) throw new Error(json.message + ": " + json.error);
     return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const addTag = async (file_id, tag, token) => {
+  const tagOptions = {
+    method: "POST",
+    body: JSON.stringify({
+      file_id,
+      tag,
+    }),
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": token,
+    },
+  };
+  try {
+    const tagResponse = await fetch(baseUrl + "tags", tagOptions);
+    const tagJson = await tagResponse.json();
+    return tagJson;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const upload = async (inputs, token) => {
+  const fd = new FormData();
+  fd.append("title", inputs.title);
+  fd.append("description", inputs.description);
+  fd.append("file", inputs.file);
+
+  const fetchOptions = {
+    method: "POST",
+    body: fd,
+    headers: {
+      "x-access-token": token,
+    },
+  };
+  try {
+    const response = await fetch(baseUrl + "media", fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ": " + json.error);
+    const tagJson = addTag(json.file_id, "mpjakk", token);
+    return { json, tagJson };
   } catch (e) {
     throw new Error(e.message);
   }
@@ -136,5 +181,7 @@ export {
   checkUserAvailable,
   checkToken,
   getAvatarImage,
-  updateProfile
+  updateProfile,
+  upload,
+  addTag,
 };

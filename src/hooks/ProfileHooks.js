@@ -4,7 +4,8 @@ const useProfileForm = callback => {
   const [inputs, setInputs] = useState({
     username: "",
     email: "",
-    full_name: ""
+    full_name: "",
+    file_name: "",
   });
   const handleSubmit = event => {
     if (event) {

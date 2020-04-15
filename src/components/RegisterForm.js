@@ -9,7 +9,7 @@ import { ValidatorForm, TextValidator } from "react-material-ui-form-validator";
 
 const RegisterForm = ({ history }) => {
   const [user, setUser] = useContext(MediaContext);
-  
+
   const doRegister = async () => {
     try {
       delete inputs.confirm;
@@ -29,14 +29,14 @@ const RegisterForm = ({ history }) => {
   const { inputs, handleInputChange, handleSubmit } = useSignUpForm(doRegister);
 
   useEffect(() => {
-    ValidatorForm.addValidationRule("isPasswordMatch", value => {
+    ValidatorForm.addValidationRule("isPasswordMatch", (value) => {
       if (value !== inputs.password) {
         return false;
       }
       return true;
     });
 
-    ValidatorForm.addValidationRule("isAvailable", async value => {
+    ValidatorForm.addValidationRule("isAvailable", async (value) => {
       try {
         const response = await checkUserAvailable(value);
         return response.available;
@@ -73,7 +73,7 @@ const RegisterForm = ({ history }) => {
                 errorMessages={[
                   "this field is required",
                   "minimum 3 charaters",
-                  "username is not available"
+                  "username is not available",
                 ]}
               />
             </Grid>
@@ -89,7 +89,7 @@ const RegisterForm = ({ history }) => {
                 validators={["minStringLength:5", "required"]}
                 errorMessages={[
                   "minimum length 5 characters",
-                  "this field is required"
+                  "this field is required",
                 ]}
               />
             </Grid>
@@ -129,7 +129,7 @@ const RegisterForm = ({ history }) => {
                 onChange={handleInputChange}
                 value={inputs.full_name}
                 validators={[
-                  "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$"
+                  "matchRegexp:^[a-zA-Z]+(([',. -][a-zA-Z ])?[a-zA-Z]*)*$",
                 ]}
                 errorMessages={["text only"]}
               />
@@ -153,7 +153,7 @@ const RegisterForm = ({ history }) => {
 };
 
 RegisterForm.propTypes = {
-  history: PropTypes.object
+  history: PropTypes.object,
 };
 
 export default withRouter(RegisterForm);

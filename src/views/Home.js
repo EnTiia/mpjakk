@@ -5,7 +5,7 @@ import { Typography } from "@material-ui/core";
 const Home = () => {
   return (
     <>
-      <Typography gutterBottom variant="h5" component="h2">
+      <Typography component="h1" variant="h2" gutterBottom>
         Home
       </Typography>
       <MediaTable />

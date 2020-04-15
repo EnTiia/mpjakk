@@ -109,6 +109,7 @@ const Nav = ({ history }) => {
             <ListItemText primary="Home" />
           </ListItem>
           {user !== null && (
+            <>
             <ListItem
               button
               component={RouterLink}
@@ -120,6 +121,18 @@ const Nav = ({ history }) => {
               </ListItemIcon>
               <ListItemText primary="Profile" />
             </ListItem>
+            <ListItem
+              button
+              component={RouterLink}
+              onClick={toggleDrawer(false)}
+              to="/upload"
+            >
+              <ListItemIcon>
+                <AccountBoxIcon />
+              </ListItemIcon>
+              <ListItemText primary="Upload" />
+            </ListItem>
+            </>
           )}
         </List>
       </Drawer>
