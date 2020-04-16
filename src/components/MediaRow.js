@@ -15,10 +15,15 @@ const useStyles = makeStyles((theme) => ({
 const MediaRow = ({ file }) => {
   const description = JSON.parse(file.description);
   const classes = useStyles();
+  let thumb = 'https://via.placeholder.com/320x200.png?text=Audio';
+  if (file.thumbnails) {
+    thumb = mediaUrl + file.thumbnails.w320;
+  }
+
   return (
     <>
       <img
-        src={mediaUrl + file.thumbnails.w320}
+        src={thumb}
         alt={file.title}
         style={{
           filter: `
