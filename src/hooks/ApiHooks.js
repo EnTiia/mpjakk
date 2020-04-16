@@ -197,6 +197,44 @@ const getUser = async (id, token) => {
   }
 };
 
+const deleteFile = async (id) => {
+  const fetchOptions = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    },
+  };
+  try {
+    const response = await fetch(baseUrl + "media/" + id, fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ": " + json.error);
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+const modifyFile = async (inputs, id) => {
+  const fetchOptions = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      "x-access-token": localStorage.getItem("token"),
+    },
+    body: JSON.stringify(inputs),
+  };
+  try {
+    const response = await fetch(baseUrl + "media/" + id, fetchOptions);
+    const json = await response.json();
+    if (!response.ok) throw new Error(json.message + ": " + json.error);
+    return json;
+  } catch (e) {
+    throw new Error(e.message);
+  }
+};
+
+
 export {
   useAllMedia,
   useSingleMedia,
@@ -208,5 +246,7 @@ export {
   updateProfile,
   upload,
   addTag,
-  getUser
+  getUser,
+  deleteFile,
+  modifyFile
 };

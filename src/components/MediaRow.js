@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import { Link as RouterLink } from "react-router-dom";
 import { GridListTileBar, IconButton, makeStyles } from "@material-ui/core";
 import PageviewIcon from "@material-ui/icons/Pageview";
+import CreateIcon from "@material-ui/icons/Create";
+import DeleteIcon from "@material-ui/icons/Delete";
+import { deleteFile } from "../hooks/ApiHooks";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
@@ -50,20 +53,24 @@ const MediaRow = ({ file, myfiles }) => {
             {myfiles && (
               <>
                 <IconButton
-                  aria-label={`info about ${file.title}`}
+                  aria-label={`modify file`}
                   component={RouterLink}
-                  to={"/single/" + file.file_id}
+                  to={"/modify/" + file.file_id}
                   className={classes.icon}
                 >
-                  <PageviewIcon fontSize="large" />
+                  <CreateIcon fontSize="large" />
                 </IconButton>
                 <IconButton
-                  aria-label={`info about ${file.title}`}
-                  component={RouterLink}
-                  to={"/single/" + file.file_id}
+                  aria-label={`delete file`}
+                  onClick={() => {
+                    const delOk = window.confirm("Do you really want to delete?");
+                    if (delOk) {
+                      deleteFile(file.file_id);
+                    }
+                  }}
                   className={classes.icon}
                 >
-                  <PageviewIcon fontSize="large" />
+                  <DeleteIcon fontSize="large" />
                 </IconButton>
               </>
             )}
