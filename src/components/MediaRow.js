@@ -12,10 +12,10 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const MediaRow = ({ file }) => {
+const MediaRow = ({ file, myfiles }) => {
   const description = JSON.parse(file.description);
   const classes = useStyles();
-  let thumb = 'https://via.placeholder.com/320x200.png?text=Audio';
+  let thumb = "https://via.placeholder.com/320x200.png?text=Audio";
   if (file.thumbnails) {
     thumb = mediaUrl + file.thumbnails.w320;
   }
@@ -38,14 +38,36 @@ const MediaRow = ({ file }) => {
         title={file.title}
         subtitle={description.desc}
         actionIcon={
-          <IconButton
-            aria-label={`info about ${file.title}`}
-            component={RouterLink}
-            to={"/single/" + file.file_id}
-            className={classes.icon}
-          >
-            <PageviewIcon fontSize="large" />
-          </IconButton>
+          <>
+            <IconButton
+              aria-label={`info about ${file.title}`}
+              component={RouterLink}
+              to={"/single/" + file.file_id}
+              className={classes.icon}
+            >
+              <PageviewIcon fontSize="large" />
+            </IconButton>
+            {myfiles && (
+              <>
+                <IconButton
+                  aria-label={`info about ${file.title}`}
+                  component={RouterLink}
+                  to={"/single/" + file.file_id}
+                  className={classes.icon}
+                >
+                  <PageviewIcon fontSize="large" />
+                </IconButton>
+                <IconButton
+                  aria-label={`info about ${file.title}`}
+                  component={RouterLink}
+                  to={"/single/" + file.file_id}
+                  className={classes.icon}
+                >
+                  <PageviewIcon fontSize="large" />
+                </IconButton>
+              </>
+            )}
+          </>
         }
       />
     </>
@@ -54,6 +76,7 @@ const MediaRow = ({ file }) => {
 
 MediaRow.propTypes = {
   file: PropTypes.object,
+  myfiles: PropTypes.bool,
 };
 
 export default MediaRow;

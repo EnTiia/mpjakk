@@ -9,6 +9,7 @@ import {
   ListItem,
   ListItemText,
   ListItemIcon,
+  Button,
 } from "@material-ui/core";
 import { getAvatarImage } from "../hooks/ApiHooks";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
@@ -16,6 +17,7 @@ import PersonIcon from "@material-ui/icons/Person";
 import EmailIcon from "@material-ui/icons/Email";
 import ProfileForm from "../components/ProfileForm";
 import BackButton from "../components/BackButton";
+import { Link as RouterLink } from "react-router-dom";
 
 const mediaUrl = "http://media.mw.metropolia.fi/wbma/uploads/";
 
@@ -63,6 +65,15 @@ const Profile = () => {
                   <PersonIcon />
                 </ListItemIcon>
                 <ListItemText primary={user.full_name} />
+              </ListItem>
+              <ListItem>
+              <Button
+              color="inherit"
+              component={RouterLink}
+              to="/myfiles"
+            >
+              My files
+            </Button>
               </ListItem>
             </List>
           </CardContent>
